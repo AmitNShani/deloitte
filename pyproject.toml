@@ -1,0 +1,10 @@
+[project]
+name = "airport-investment-agent"
+version = "0.1.0"
+description = "Chat agent that screens US airports for renovation investment opportunities"
+requires-python = ">=3.10"
+# Dependencies are listed in requirements.txt.
+
+[tool.ruff]
+required-version = ">=0.16"  # the rule set below is Ruff 0.16's default selection
+line-length = 110

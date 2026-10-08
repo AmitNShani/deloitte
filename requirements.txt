@@ -1,0 +1,8 @@
+anthropic>=1.12
+faster-whisper>=1.2
+openai>=3.26
+pandas>=2.2
+python-dotenv>=1.0
+requests>=2.32
+streamlit>=1.50
+pytest>=8.0
