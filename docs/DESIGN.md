@@ -29,6 +29,23 @@ returns, forecast traffic, or cover non-US airports. The agent says so when aske
 | Chat interface (voice bonus) | Streamlit chat. Voice through a mic button, transcribed locally |
 | Communicate assumptions, uncertainty and scope | Every data-backed answer ends with an **Assumptions and confidence** note: data window, the assumptions that matter for that question, and a high/medium/low confidence with the reason. Tools return what drives confidence: assumed components, partial coverage, stale or approximate sources. Out-of-scope questions are answered as far as the data allows, with the rest declined explicitly |
 
+### Interpretations of the brief
+
+Where the brief leaves a definition open, the build follows the interpretation below. Each would be
+a small, local change if a different meaning was intended.
+
+| The brief says | Interpretation | Why | If a different meaning was intended |
+|---|---|---|---|
+| "renovations will be **most profitable**" | A demand-side screen: airports where demand presses against capacity and is still growing | Profit needs costs and revenues, which no public source provides per airport. Unserved demand that capacity could capture is the driver of renovation returns | Add a financial layer on top of the score. An illustrative revenue figure (Passenger Facility Charges) is already returned, unscored |
+| "what is the **unmet flight demand** in SFO" | A yes/no flag with its evidence (full planes, capacity delay, growth), not a count | Unserved demand isn't observed in public data; a count would rest on a capacity figure we can't source | Add an estimate, e.g. passengers above a stated capacity assumption |
+| "compare **LA** and Santa Ana" | LA = Los Angeles International (LAX) | It's the airport usually meant by "LA" | The agent can already compare Burbank, Long Beach and Ontario on request |
+| "percentage of **long haul** flights" | Departures over 3,000 miles, shown for all flights and split into passenger and cargo | No definition is given. 3,000 miles is longer than any coast-to-coast flight within the lower 48 states (New York–Los Angeles is about 2,500). Anchorage is mostly cargo, so the split changes the answer (30% vs 3%) | The threshold is a parameter; answers also show 1,500, 2,200 and 4,000 miles |
+| "use **public APIs**" | BTS's Socrata API plus BTS's public download files, the FAA status API and OurAirports. A snapshot of the responses ships with the repo | BTS publishes delay causes and route distances only as files | `fetch_data --from-apis` runs on the APIs alone; the snapshot can be deleted |
+| "**congestion** levels" | Capacity-caused (NAS) delay per arriving flight; all-cause delays as context | All-cause delays mix in airline problems and snowstorms (§4) | All-cause figures are already returned by the tools |
+| "**New England**" | Connecticut, Maine, Massachusetts, New Hampshire, Rhode Island, Vermont | The US Census definition | Region lists are in `src/config.py` |
+| "terminal expansion" | Judged on passenger demand, load factor and growth | Terminal capacity itself isn't in any public source | Add a curated gate-capacity table |
+| Data recency (not specified) | The latest 12 months BTS has published (about a five-month lag), compared with the 12 before | Twelve months removes seasonality | The window length is a setting |
+
 ## 3. Data (public sources)
 
 | Source | Access | Used for |
